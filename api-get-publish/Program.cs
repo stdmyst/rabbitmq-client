@@ -1,17 +1,18 @@
 using api_with_hosted_consumers;
+using Microsoft.Extensions.Options;
 using rabbitmq_client;
-using rabbitmq_client.Abstract;
 using RabbitMQ.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.Configure<RabbitSettings>(builder.Configuration.GetSection("rabbitSettings"));
+
 // Rabbit service dependencies.
-builder.Services.AddScoped<IConnectionFactory>(serviceProvider =>
+builder.Services.AddSingleton<IConnectionFactory>(serviceProvider =>
     {
-        var appSettings = serviceProvider.GetRequiredService<AppSettings>();
-        var rabbitSettings = appSettings.RabbitSettings;
+        var rabbitSettings = serviceProvider.GetRequiredService<IOptions<RabbitSettings>>().Value;
         return new ConnectionFactory
         {
             HostName = rabbitSettings.Hostname,
@@ -24,10 +25,6 @@ builder.Services.AddScoped<IConnectionFactory>(serviceProvider =>
     .AddRabbitClientFactory();
 
 var app = builder.Build();
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.MapControllers();
 

@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Microsoft.Extensions.Options;
 using rabbitmq_client;
 using rabbitmq_client.Abstract;
 
@@ -6,12 +7,12 @@ namespace api_with_hosted_consumers;
 
 public class RabbitLogEventDispatcher(
     IRabbitClientFactory rabbitClientFactory,
-    AppSettings settings,
+    IOptions<RabbitSettings> settings,
     ILogger<RabbitLogEventDispatcher> logger) : RabbitConsumerDispatcher(rabbitClientFactory)
 {
     private static readonly string RoutingKey = "test.rk";
     
-    private readonly RabbitSettings _rabbitSettings = settings.RabbitSettings;
+    private readonly RabbitSettings _rabbitSettings = settings.Value;
     
     public override async Task ConfigureAndRunConsumers()
     {
