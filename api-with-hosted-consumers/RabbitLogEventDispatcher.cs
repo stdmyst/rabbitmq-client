@@ -1,0 +1,41 @@
+﻿using System.Text;
+using rabbitmq_client;
+using rabbitmq_client.Abstract;
+
+namespace api_with_hosted_consumers;
+
+public class RabbitLogEventDispatcher(
+    IRabbitClientFactory rabbitClientFactory,
+    AppSettings settings,
+    ILogger<RabbitLogEventDispatcher> logger) : RabbitConsumerDispatcher(rabbitClientFactory)
+{
+    private static readonly string RoutingKey = "test.rk";
+    
+    private readonly RabbitSettings _rabbitSettings = settings.RabbitSettings;
+    
+    public override async Task ConfigureAndRunConsumers()
+    {
+        var consumer = await RabbitClientFactory.CreateConsumer();
+        
+        // Add to consumers container.
+        Consumers.Add(consumer);
+        
+        await consumer.Consume(
+            eventHandler: (_, @event) =>
+            {
+                var message = Encoding.UTF8.GetString(@event.Body.ToArray());
+                logger.LogInformation($"Received message: {message}");
+                return Task.CompletedTask;
+            },
+            settings: new RabbitConsumerSettings
+            {
+                Exchange = _rabbitSettings.Exchange,
+                RoutingKey = RoutingKey,
+                QueueSettings = new QueueSettings
+                {
+                    QueueName = _rabbitSettings.QueueName,
+                    Arguments = new Dictionary<string, object> { { "x-message-ttl", 864000000 } }
+                }
+            });
+    }
+}

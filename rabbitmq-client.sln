@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rabbitmq-client", "rabbitmq-client\rabbitmq-client.csproj", "{01A3EB53-5A94-4298-902D-D224A066F9DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api-with-hosted-consumers", "api-with-hosted-consumers\api-with-hosted-consumers.csproj", "{9F567CD1-444A-4E6D-9D90-6C9CEDA0E46A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api-get-publish", "api-get-publish\api-get-publish.csproj", "{61EC8E57-AD92-48AF-9CFA-7738F8B588FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01A3EB53-5A94-4298-902D-D224A066F9DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01A3EB53-5A94-4298-902D-D224A066F9DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01A3EB53-5A94-4298-902D-D224A066F9DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01A3EB53-5A94-4298-902D-D224A066F9DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F567CD1-444A-4E6D-9D90-6C9CEDA0E46A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F567CD1-444A-4E6D-9D90-6C9CEDA0E46A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F567CD1-444A-4E6D-9D90-6C9CEDA0E46A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F567CD1-444A-4E6D-9D90-6C9CEDA0E46A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61EC8E57-AD92-48AF-9CFA-7738F8B588FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61EC8E57-AD92-48AF-9CFA-7738F8B588FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61EC8E57-AD92-48AF-9CFA-7738F8B588FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61EC8E57-AD92-48AF-9CFA-7738F8B588FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
