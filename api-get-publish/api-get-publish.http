@@ -1,6 +1,11 @@
 @api_get_publish_HostAddress = http://localhost:5242
 
-GET {{api_get_publish_HostAddress}}/weatherforecast/
+GET {{api_get_publish_HostAddress}}/rabbit/get-message/
+Accept: application/json
+
+###
+
+POST {{api_get_publish_HostAddress}}/rabbit/publish-message
 Accept: application/json
 
 ###

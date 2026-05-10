@@ -6,10 +6,11 @@ using rabbitmq_client.Abstract;
 namespace api_get_publish.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("rabbit")]
 public class RabbitController(IRabbitClientFactory rabbitClientFactory) : ControllerBase
 {
-    [HttpGet(Name = "get-message")]
+    [HttpGet]
+    [Route("get-message")]
     public async Task<IResult> Get(CancellationToken cancellationToken)
     {
         using var consumer = await rabbitClientFactory.CreateConsumer();
@@ -20,7 +21,8 @@ public class RabbitController(IRabbitClientFactory rabbitClientFactory) : Contro
             : Results.NotFound();
     }
     
-    [HttpPost(Name = "publish-message")]
+    [HttpPost]
+    [Route("publish-message")]
     public async Task<IResult> Post([FromBody] Message message, CancellationToken cancellationToken)
     {
         using var publisher = await rabbitClientFactory.CreatePublisher();

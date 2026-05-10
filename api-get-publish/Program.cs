@@ -2,6 +2,7 @@ using api_with_hosted_consumers;
 using Microsoft.Extensions.Options;
 using rabbitmq_client;
 using RabbitMQ.Client;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,8 +25,12 @@ builder.Services.AddSingleton<IConnectionFactory>(serviceProvider =>
     })
     .AddRabbitClientFactory();
 
+builder.Services.AddOpenApi();
+
 var app = builder.Build();
 
 app.MapControllers();
+app.MapOpenApi();
+app.MapScalarApiReference();
 
 app.Run();
