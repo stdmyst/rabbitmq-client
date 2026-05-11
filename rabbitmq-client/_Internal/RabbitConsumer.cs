@@ -11,27 +11,25 @@ internal class RabbitConsumer(IChannel channel) : RabbitClient(channel), IRabbit
         RabbitConsumerSettings settings)
     {
         var queueSettings = settings.QueueSettings;
-        
-        await ConfigureQos(queueSettings.Qos);
 
-        var queue = await Channel.QueueDeclareAsync(
-            queueSettings.QueueName,
-            durable: queueSettings.Durable,
-            exclusive: queueSettings.Exclusive,
-            autoDelete: queueSettings.AutoDelete,
-            arguments: queueSettings.Arguments,
-            passive: queueSettings.Passive,
-            noWait: queueSettings.NoWait);
-        
+        if (queueSettings.Qos is not null)
+        {
+            await ConfigureQos(queueSettings.Qos);
+        }
+
+        var queue = await DeclareQueue(queueSettings);
         await Channel.QueueBindAsync(queue.QueueName, settings.Exchange, settings.RoutingKey);
         
         var consumer = new AsyncEventingBasicConsumer(Channel);
-        consumer.ReceivedAsync += eventHandler;
         
-        await Channel.BasicConsumeAsync(queueSettings.QueueName, settings.AutoAck, consumer);
+        consumer.ReceivedAsync += settings.AckSettings.AutoAck 
+            ? eventHandler 
+            : (sender, @event) => AckHandler(sender, @event, eventHandler, settings.AckSettings);
+
+        await Channel.BasicConsumeAsync(queue.QueueName, settings.AckSettings.AutoAck, consumer);
     }
     
-    public async Task<BasicGetResult> Get(
+    public async Task<BasicGetResult?> Get(
         string queue, 
         bool autoAck = true, 
         CancellationToken cancellationToken = default)
@@ -40,10 +38,47 @@ internal class RabbitConsumer(IChannel channel) : RabbitClient(channel), IRabbit
 
         return getResult;
     }
-
-    private async Task ConfigureQos(QosSettings? qosSettings)
+    
+    private async Task ConfigureQos(QosSettings settings)
     {
-        if (qosSettings is not null)
-            await Channel.BasicQosAsync(qosSettings.PrefetchSize, qosSettings.PrefetchCount, qosSettings.Global);
+        await Channel.BasicQosAsync(settings.PrefetchSize, settings.PrefetchCount, settings.Global);
+    }
+    
+    private async Task<QueueDeclareOk> DeclareQueue(QueueSettings settings)
+    {
+        var queue = await Channel.QueueDeclareAsync(
+            settings.QueueName,
+            durable: settings.Durable,
+            exclusive: settings.Exclusive,
+            autoDelete: settings.AutoDelete,
+            arguments: settings.Arguments,
+            passive: settings.Passive,
+            noWait: settings.NoWait);
+        
+        return queue;
+    }
+
+    private async Task AckHandler(
+        object sender, 
+        BasicDeliverEventArgs @event, 
+        AsyncEventHandler<BasicDeliverEventArgs> baseEventHandler,
+        AckSettings ackSettings)
+    {
+        try
+        {
+            await baseEventHandler(sender, @event);
+            // Manually send consumer ack after event handled successfully.
+            await Channel.BasicAckAsync(deliveryTag: @event.DeliveryTag, multiple: false);
+        }
+        catch
+        {
+            // Send nack if handler fails.
+            await Channel.BasicNackAsync(
+                deliveryTag: @event.DeliveryTag, 
+                multiple: false, 
+                requeue: ackSettings.RequeueOnFailure);
+                    
+            throw;
+        }
     }
 }

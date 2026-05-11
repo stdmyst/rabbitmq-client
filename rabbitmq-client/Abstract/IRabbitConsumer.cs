@@ -10,7 +10,7 @@ public interface IRabbitConsumer : IRabbitClient
         AsyncEventHandler<BasicDeliverEventArgs> eventHandler, 
         RabbitConsumerSettings settings);
 
-    Task<BasicGetResult> Get(
+    Task<BasicGetResult?> Get(
         string queue,
         bool autoAck = true,
         CancellationToken cancellationToken = default);

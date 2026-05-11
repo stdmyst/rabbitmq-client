@@ -4,8 +4,14 @@ public class RabbitConsumerSettings
 {
     public required string Exchange { get; set; }
     public required string RoutingKey { get; set; }
-    public bool AutoAck { get; set; } = true;
+    public AckSettings AckSettings { get; set; } = new();
     public required QueueSettings QueueSettings { get; set; }
+}
+
+public class AckSettings
+{
+    public bool AutoAck { get; set; } = true;
+    public bool RequeueOnFailure { get; set; } = false;
 }
 
 public class QueueSettings
@@ -14,7 +20,7 @@ public class QueueSettings
     public bool Durable { get; set; } = true;
     public bool Exclusive { get; set; } = false;
     public bool AutoDelete { get; set; } = false;
-    public IDictionary<string, object>? Arguments { get; set; } = null;
+    public IDictionary<string, object?>? Arguments { get; set; } = null;
     public bool Passive { get; set; } = false;
     public bool NoWait { get; set; } = false;
     public QosSettings? Qos { get; set; } = null;

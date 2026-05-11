@@ -35,7 +35,7 @@ public class RabbitLogEventDispatcher(
                 QueueSettings = new QueueSettings
                 {
                     QueueName = _rabbitSettings.QueueName,
-                    Arguments = new Dictionary<string, object> { { "x-message-ttl", 864000000 } }
+                    Arguments = new Dictionary<string, object?> { { "x-message-ttl", 864000000 } }
                 }
             });
     }
