@@ -1,4 +1,4 @@
-﻿namespace rabbitmq_client;
+﻿namespace rabbitmq_client.Models;
 
 public class RabbitConsumerSettings
 {

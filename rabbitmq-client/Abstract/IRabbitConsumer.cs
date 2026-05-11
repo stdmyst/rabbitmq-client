@@ -1,4 +1,5 @@
 ﻿using rabbitmq_client._Internal;
+using rabbitmq_client.Models;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
