@@ -13,14 +13,15 @@ builder.Services.Configure<RabbitSettings>(builder.Configuration.GetSection("rab
 // Rabbit service dependencies.
 builder.Services.AddSingleton<IConnectionFactory>(serviceProvider =>
     {
-        var rabbitSettings = serviceProvider.GetRequiredService<IOptions<RabbitSettings>>().Value;
+        var connectionSettings = serviceProvider.GetRequiredService<IOptions<RabbitSettings>>()
+            .Value.ConnectionSettings;
         return new ConnectionFactory
         {
-            HostName = rabbitSettings.Hostname,
-            Port = rabbitSettings.Port,
-            UserName = rabbitSettings.Username,
-            Password = rabbitSettings.Password,
-            VirtualHost = rabbitSettings.VirtualHost
+            HostName = connectionSettings.Hostname,
+            Port = connectionSettings.Port,
+            UserName = connectionSettings.Username,
+            Password = connectionSettings.Password,
+            VirtualHost = connectionSettings.VirtualHost
         };
     })
     .AddRabbitClientFactory();
