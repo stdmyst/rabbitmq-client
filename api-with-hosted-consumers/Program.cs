@@ -1,7 +1,6 @@
 using api_with_hosted_consumers;
 using Microsoft.Extensions.Options;
 using rabbitmq_client;
-using rabbitmq_client.Abstract;
 using RabbitMQ.Client;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,8 +22,7 @@ builder.Services.AddSingleton<IConnectionFactory>(serviceProvider =>
         };
     })
     .AddRabbitClientFactory()
-    .AddSingleton<IRabbitConsumerDispatcher, RabbitLogEventDispatcher>()
-    .AddHostedService<RabbitHostedService>();
+    .AddRabbitConsumerBackgroundService<RabbitLogEventDispatcher>();
 
 var app = builder.Build();
 
