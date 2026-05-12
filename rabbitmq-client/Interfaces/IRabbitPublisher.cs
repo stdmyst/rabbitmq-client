@@ -1,6 +1,6 @@
 ﻿using rabbitmq_client._Internal;
 
-namespace rabbitmq_client.Abstract;
+namespace rabbitmq_client.Interfaces;
 
 public interface IRabbitPublisher : IRabbitClient
 {

@@ -1,4 +1,4 @@
-﻿using rabbitmq_client.Models;
+﻿using rabbitmq_client.Settings;
 
 namespace api_with_hosted_consumers;
 

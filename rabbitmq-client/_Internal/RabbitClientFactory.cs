@@ -1,4 +1,4 @@
-﻿using rabbitmq_client.Abstract;
+﻿using rabbitmq_client.Interfaces;
 
 namespace rabbitmq_client._Internal;
 

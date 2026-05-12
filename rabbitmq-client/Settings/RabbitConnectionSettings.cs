@@ -1,4 +1,4 @@
-﻿namespace rabbitmq_client.Models;
+﻿namespace rabbitmq_client.Settings;
 
 public class RabbitConnectionSettings
 {

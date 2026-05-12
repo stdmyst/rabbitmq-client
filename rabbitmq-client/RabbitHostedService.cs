@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Hosting;
-using rabbitmq_client.Abstract;
+using rabbitmq_client.Interfaces;
 
 namespace rabbitmq_client;
 

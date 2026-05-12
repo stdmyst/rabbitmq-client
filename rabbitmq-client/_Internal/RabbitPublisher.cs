@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using rabbitmq_client.Abstract;
+using rabbitmq_client.Interfaces;
 using RabbitMQ.Client;
 
 namespace rabbitmq_client._Internal;

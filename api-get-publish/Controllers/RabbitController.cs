@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
-using rabbitmq_client.Abstract;
+using rabbitmq_client.Interfaces;
 
 namespace api_get_publish.Controllers;
 

@@ -1,11 +1,19 @@
-﻿namespace rabbitmq_client.Models;
+﻿namespace rabbitmq_client.Settings;
 
 public class RabbitConsumerSettings
 {
     public required string Exchange { get; set; }
     public required string RoutingKey { get; set; }
+    public QosSettings? Qos { get; set; } = null;
     public AckSettings AckSettings { get; set; } = new();
     public required QueueSettings QueueSettings { get; set; }
+}
+
+public class QosSettings
+{
+    public uint PrefetchSize { get; set; } = 0;
+    public ushort PrefetchCount { get; set; } = 1;
+    public bool Global { get; set; } = false;
 }
 
 public class AckSettings
@@ -23,12 +31,4 @@ public class QueueSettings
     public IDictionary<string, object?>? Arguments { get; set; } = null;
     public bool Passive { get; set; } = false;
     public bool NoWait { get; set; } = false;
-    public QosSettings? Qos { get; set; } = null;
-}
-
-public class QosSettings
-{
-    public uint PrefetchSize { get; set; } = 0;
-    public ushort PrefetchCount { get; set; } = 1;
-    public bool Global { get; set; } = false;
 }

@@ -1,5 +1,5 @@
-﻿using rabbitmq_client.Abstract;
-using rabbitmq_client.Models;
+﻿using rabbitmq_client.Interfaces;
+using rabbitmq_client.Settings;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
@@ -11,14 +11,12 @@ internal class RabbitConsumer(IChannel channel) : RabbitClient(channel), IRabbit
         AsyncEventHandler<BasicDeliverEventArgs> eventHandler, 
         RabbitConsumerSettings settings)
     {
-        var queueSettings = settings.QueueSettings;
-
-        if (queueSettings.Qos is not null)
+        if (settings.Qos is not null)
         {
-            await ConfigureQos(queueSettings.Qos);
+            await ConfigureQos(settings.Qos);
         }
-
-        var queue = await DeclareQueue(queueSettings);
+        
+        var queue = await DeclareQueue(settings.QueueSettings);
         await Channel.QueueBindAsync(queue.QueueName, settings.Exchange, settings.RoutingKey);
         
         var consumer = new AsyncEventingBasicConsumer(Channel);

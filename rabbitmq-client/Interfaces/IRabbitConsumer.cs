@@ -1,9 +1,9 @@
 ﻿using rabbitmq_client._Internal;
-using rabbitmq_client.Models;
+using rabbitmq_client.Settings;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace rabbitmq_client.Abstract;
+namespace rabbitmq_client.Interfaces;
 
 public interface IRabbitConsumer : IRabbitClient
 {

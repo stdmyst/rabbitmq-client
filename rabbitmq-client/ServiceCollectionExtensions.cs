@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using rabbitmq_client._Internal;
-using rabbitmq_client.Abstract;
+using rabbitmq_client.Interfaces;
 
 namespace rabbitmq_client;
 

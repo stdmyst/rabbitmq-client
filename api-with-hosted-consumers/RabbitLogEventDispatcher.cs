@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Microsoft.Extensions.Options;
-using rabbitmq_client.Abstract;
-using rabbitmq_client.Models;
+using rabbitmq_client.Interfaces;
+using rabbitmq_client.Settings;
 
 namespace api_with_hosted_consumers;
 

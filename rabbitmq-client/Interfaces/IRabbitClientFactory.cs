@@ -1,4 +1,4 @@
-﻿namespace rabbitmq_client.Abstract;
+﻿namespace rabbitmq_client.Interfaces;
 
 public interface IRabbitClientFactory
 {
