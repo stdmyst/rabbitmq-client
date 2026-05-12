@@ -9,7 +9,7 @@ public interface IRabbitPublisher : IRabbitClient
         string exchange, 
         string body,
         bool mandatory = false,
-        IDictionary<string, object> headers = null,
+        IDictionary<string, object>? headers = null,
         CancellationToken cancellationToken = default);
     
     Task BasicPublish(
@@ -17,6 +17,6 @@ public interface IRabbitPublisher : IRabbitClient
         string exchange, 
         ReadOnlyMemory<byte> body,
         bool mandatory = false,
-        IDictionary<string, object> headers = null,
+        IDictionary<string, object>? headers = null,
         CancellationToken cancellationToken = default);
 }

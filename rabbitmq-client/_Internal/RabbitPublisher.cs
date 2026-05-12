@@ -11,7 +11,7 @@ internal sealed class RabbitPublisher(IChannel channel) : RabbitClient(channel),
         string exchange, 
         string body, 
         bool mandatory = false, 
-        IDictionary<string, object> headers = null,
+        IDictionary<string, object>? headers = null,
         CancellationToken cancellationToken = default)
     {
         var asBytes = Encoding.UTF8.GetBytes(body);
@@ -24,7 +24,7 @@ internal sealed class RabbitPublisher(IChannel channel) : RabbitClient(channel),
         string exchange, 
         ReadOnlyMemory<byte> body,
         bool mandatory = false,
-        IDictionary<string, object> headers = null,
+        IDictionary<string, object>? headers = null,
         CancellationToken cancellationToken = default)
     {
         var basicProperties = new BasicProperties
