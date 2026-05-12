@@ -7,12 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddOptions<AppSettings>();
+builder.Services.Configure<RabbitSettings>(builder.Configuration.GetSection("rabbitSettings"));;
 
 // Rabbit service dependencies.
 builder.Services.AddRabbitClientFactory(serviceProvider 
-    => serviceProvider.GetRequiredService<IOptions<AppSettings>>().Value
-        .RabbitSettings.ConnectionSettings);
+    => serviceProvider.GetRequiredService<IOptions<RabbitSettings>>()
+        .Value.ConnectionSettings);
 
 builder.Services.AddOpenApi();
 
