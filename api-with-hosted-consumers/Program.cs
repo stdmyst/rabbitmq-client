@@ -7,10 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<RabbitSettings>(builder.Configuration.GetSection("rabbitSettings"));
 
 // Rabbit hosted service dependencies.
+#if false
 builder.Services.AddRabbitClientFactory(serviceProvider 
         => serviceProvider.GetRequiredService<IOptions<RabbitSettings>>()
             .Value.ConnectionSettings)
     .AddRabbitConsumerBackgroundService<RabbitLogEventDispatcher>();
+#endif
+builder.Services.AddRabbitClientFactory(builder.Configuration, sectionName: "RabbitSettings:RabbitConnectionSettings");
 
 var app = builder.Build();
 
