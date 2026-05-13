@@ -13,7 +13,8 @@ builder.Services.AddRabbitClientFactory(serviceProvider
             .Value.ConnectionSettings)
     .AddRabbitConsumerBackgroundService<RabbitLogEventDispatcher>();
 #endif
-builder.Services.AddRabbitClientFactory(builder.Configuration, sectionName: "RabbitSettings:RabbitConnectionSettings");
+builder.Services.AddRabbitClientFactory(builder.Configuration, sectionName: "RabbitSettings:ConnectionSettings");
+builder.Services.AddRabbitConsumerBackgroundService<RabbitLogEventDispatcher>();
 
 var app = builder.Build();
 
