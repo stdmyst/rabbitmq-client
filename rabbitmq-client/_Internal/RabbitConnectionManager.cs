@@ -8,7 +8,7 @@ namespace rabbitmq_client._Internal;
 internal class RabbitConnectionManager(
     IConnectionFactory connectionFactory, 
     ILogger<RabbitConnectionManager> logger,
-    RabbitConnectionSettings connectionSettings)
+    RabbitConnectionSettings connectionSettings) : IDisposable
 {
     private bool _disposed;
     private IConnection? _connection;
